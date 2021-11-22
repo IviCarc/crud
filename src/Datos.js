@@ -1,5 +1,6 @@
 import './App.css';
 import React from 'react';
+import Formulario from './Formulario';
 
 class Datos extends React.Component {
     constructor(props) {
@@ -14,9 +15,12 @@ class Datos extends React.Component {
         }
     }
     
+    test () {
+        console.log("PRUEBA")
+    }
     
     render () {
-        return (<div>NASHE</div>)
+        <Formulario data={this.state}/>
     }
 
 }

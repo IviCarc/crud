@@ -32,6 +32,7 @@ class Formulario extends React.Component {
   }
 
   render () {
+    console.log(this.props.func)
     return (
       <div>
         <form >
