@@ -27,11 +27,10 @@ export default class App extends React.Component {
             }
         })
     }
-
+1
     render() {
         return ( <div>
             <Formulario actualizarDatos={this.actualizarDatos} mostrarDatos={this.state}/>
-            {/* <Datos  mostrarDatos={this.state}/> */}
         </div>
         )
     }

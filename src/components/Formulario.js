@@ -4,6 +4,23 @@ import React from 'react';
 import Datos from './Datos';
 // import Datos from "./Datos"
 
+function Input(props) {
+  return <div>
+    <label htmlFor={props.nombre}>{props.labelText}</label>
+    <input className="form-control" type="text" name={props.nombre} placeholder={props.nombre} />
+  </div>
+}
+
+function Select(props) {
+  return <div>
+    {/* value={this.state.categoria}  AGREGA ESTO BOLUDO  Y EL ONCHANGE EN TODOS*/}
+    <label htmlFor={props.nombre}>{props.labelText}</label>
+      <select className="form-control" name={props.nombre}>
+        {props.opciones.map(opt => { return <option value={opt}> {opt} </option> })}
+      </select>
+  </div>
+}
+
 class Formulario extends React.Component {
   constructor(props) {
     super(props);
@@ -39,57 +56,29 @@ class Formulario extends React.Component {
     return (
       <div style={{width:"60%", margin:"10px auto"}}>
         <form className="">
-          <div className="form-group">
-            <label htmlFor="nombre">Inserte su nombre</label>
-            <input className="form-control" className="form-control" type="text" name="nombre" placeholder="Nombre" onChange={this.cambiosInput}/>
-          </div>
 
-          <div>
-            <label htmlFor="apellido">Inserte su apellido</label>
-            <input className="form-control" type="text" name="apellido" placeholder="Apellido" onChange={this.cambiosInput}/>
-          </div>
+          <Input nombre="nombre" labelText="Ingrese su nombre"/>
 
-          <div>
-            <label htmlFor="edad">Inserte su edad</label>
-            <input className="form-control" type="text" name="edad" placeholder="Edad" onChange={this.cambiosInput}/>
-          </div>
+          <Input nombre="apellido" labelText="Ingrese su apellido"/>
 
-          <div>
+          <Input nombre="edad" labelText="Ingrese su edad"/>
+
+          <Select nombre="genero" labelText="Inserte su género" opciones={["Hombre", "Mujer", "Otro"]}/>
+
+          <Select nombre="estadoCivil" labelText="Inserte su estado civil" opciones={["Soltero", "Casado"]}/>
+
+          <Input nombre="hijos" labelText="Ingrese cuántos hijos tiene"/>
+
+          <Select nombre="categoria" labelText="Seleccione la categoria del auto" opciones={["1", "2", "3", "4"]}/>
+
+          {/* <div>
             <label htmlFor="genero">Inserte su genero</label>
             <select className="form-control" name="genero" value={this.state.genero} onChange={this.cambiosInput}>
               <option value="hombre">Hombre</option>
               <option value="mujer">Mujer</option>
               <option value="otro">Otro</option>
             </select>
-          </div>
-
-          <div>
-            <label htmlFor="estadoCivil">Inserte su estado civil</label>
-            <select className="form-control" name="estadoCivil" value={this.state.estadoCivil} onChange={this.cambiosInput}>
-              <option value="soltero">Soltero</option>
-              <option value="casado">Casado</option>
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="hijos">Ingrese cuantos hijos tiene</label>
-            <input className="form-control" type="text" name="hijos" placeholder="Cant hijos" onChange={this.cambiosInput}/>
-          </div>
-
-          <div>
-            <label htmlFor="categoria">Seleccione la categoria del auto</label>
-            <select className="form-control" name="categoria" value={this.state.categoria} onChange={this.cambiosInput}>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="pago">Inserte el monto dispuesto a pagar</label>
-            <input className="form-control" type="text" name="pago" placeholder="Pago pretendido" onChange={this.cambiosInput}/>
-          </div>
+          </div>*/}
 
           <button onClick={this.enviar} className="btn btn-primary">Cargar datos</button>
           <Datos mostrarDatos={this.props.mostrarDatos}/>
@@ -97,7 +86,7 @@ class Formulario extends React.Component {
       </div>
     )
   }
-
+  
 }
 
 

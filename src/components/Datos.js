@@ -10,7 +10,6 @@ export default class Datos extends React.Component {
 
     render () {
         let dato = this.props.mostrarDatos
-        console.log(dato)
         return (<div>
                 <button className="btn btn-primary" onClick={e => {e.preventDefault();this.setState({clicked:true})}}>Mostrar datos</button>
                 {
