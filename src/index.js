@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Datos from './Datos';
-import Formulario from './Formulario';
+import App from "./components/App"
 
 ReactDOM.render(
   <React.StrictMode>
-    <Formulario func={Datos}/>
+    <App />
   </React.StrictMode>,
   document.getElementById('main')
 );
