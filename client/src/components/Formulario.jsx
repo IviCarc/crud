@@ -11,19 +11,27 @@ export default class Formulario extends React.Component {
       apellido : "",
       edad : "",
       genero : "hombre",
-      contraseña : "",
+      contraseña : ""
     }
 
     this.enviar = this.enviar.bind(this);
     this.cambiosInput = this.cambiosInput.bind(this);
   }
 
-  enviar(e, obj) {
+  enviar(e) {
     e.preventDefault();
     // let data = JSON.stringify(this.state)
-    let url = "http://localhost:3000"
+    let url = "http://localhost:3000/api/users"
 
-    fetch(url, {method:"POST", headers: {},body:JSON.stringify({"queonda":"aa"})})
+    console.log(this.state)
+
+    let meta = {
+      method:"POST", 
+      headers: {"Content-Type" : 'application/json'},
+      body: JSON.stringify(this.state)
+    }
+
+    fetch(url, meta)
       .then(res => res)
       .then(data => console.log(data))
       .catch(err => console.log(err))

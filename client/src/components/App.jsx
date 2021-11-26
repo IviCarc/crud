@@ -1,8 +1,10 @@
 import React from "react";
 import Formulario from "./Formulario.jsx";
 import Titulo from "./Titulo.jsx";
+import Datos from './Datos.jsx'
 
 export default class App extends React.Component {
+
 
   render() {
     return (
