@@ -7,6 +7,9 @@ function Input(props) {
         placeholder={props.nombre}
         onChange={props.onChange}
         autoComplete="off"
+        onKeyUp={props.validar}
+        onBlur={props.validar}
+        regex={props.regex}
       />);
 }
 
@@ -17,6 +20,8 @@ function Select(props) {
         name={props.nombre}
         onChange={props.onChange}
         value={props.defaultValue}
+        onKeyUp={props.validar}
+        onBlur={props.validar}
       >
         {props.opciones.map((opt, i) => {
           return (

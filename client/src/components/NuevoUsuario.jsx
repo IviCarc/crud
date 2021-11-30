@@ -4,15 +4,29 @@ import {Input, Select, Button} from './componentesForm';
 const NuevoUsuario = (props) => {
     return (
         <div className="d-flex justify-content-between gap-2 m-1">
-            <Input nombre="nombre" labelText="Nombre:" onChange={props.cambiosInput} />
+            <Input 
+                nombre="nombre" 
+                labelText="Nombre:" 
+                onChange={props.cambiosInput} 
+                validar={props.validar}
+                regex = ""
+                />
 
             <Input
                 nombre="apellido"
                 labelText="Apellido:"
                 onChange={props.cambiosInput}
+                validar = {props.validar}
+                regex = ""
             />
 
-            <Input nombre="edad" labelText="Edad:" onChange={props.cambiosInput} />
+            <Input 
+                nombre="edad" 
+                abelText="Edad:" 
+                onChange={props.cambiosInput} 
+                validar={props.validar}
+                regex = ""
+            />
 
             <Select
                 nombre="genero"
@@ -20,6 +34,7 @@ const NuevoUsuario = (props) => {
                 opciones={["Hombre", "Mujer", "Otro"]}
                 onChange={props.cambiosInput}
                 defaultValue={props.state.genero}
+                validar = {props.validar}
             />
 
             <Button className="btn btn-primary" text="Registrar" />
