@@ -1,7 +1,10 @@
 // import logo from './logo.svg';
 // import './App.css';
 import React from 'react';
-import {Input, Select, Button} from "./componentesForm.jsx";
+import Usuarios from './Usuarios'
+import axios from 'axios'
+import NuevoUsuario from './NuevoUsuario.jsx';
+
 
 export default class Formulario extends React.Component {
   constructor(props) {
@@ -11,54 +14,65 @@ export default class Formulario extends React.Component {
       apellido : "",
       edad : "",
       genero : "hombre",
-      contraseña : ""
+      users:[]
     }
-
+    
+    this.url = "http://localhost:3000/api/users";
+    
+    this.editUser = this.editUser.bind(this);
+    this.deleteUser = this.deleteUser.bind(this);
+    this.fetchData = this.fetchData.bind(this);
     this.enviar = this.enviar.bind(this);
     this.cambiosInput = this.cambiosInput.bind(this);
   }
 
-  enviar(e) {
+  async componentDidMount() {
+    this.fetchData();
+  }
+  
+  deleteUser = async (e, id) => {
     e.preventDefault();
-    // let data = JSON.stringify(this.state)
-    let url = "http://localhost:3000/api/users"
-
-    console.log(this.state)
-
-    let meta = {
-      method:"POST", 
-      headers: {"Content-Type" : 'application/json'},
-      body: JSON.stringify(this.state)
-    }
-
-    fetch(url, meta)
-      .then(res => res)
-      .then(data => console.log(data))
-      .catch(err => console.log(err))
+    let url = this.url + "/" + id
+    console.log(url)
+    await axios.delete(url);
+    this.fetchData();
   }
 
-  cambiosInput(e) {
+  editUser = async (e, id) => {
+    e.preventDefault();
+    this.fetchData();
+  } 
+
+  enviar = async (e) => {
+    e.preventDefault();
+    await axios.post(this.url, {
+      nombre:this.state.nombre,
+      apellido:this.state.apellido,
+      edad:this.state.edad,
+      genero:this.state.genero
+    });
+    this.fetchData();
+  }
+
+  fetchData = async () => {
+    const res = await axios.get(this.url);
+    console.log("FETCH" , res.data)
+    this.setState({users:res.data});
+  }
+
+  cambiosInput = (e) => {
     this.setState({
       [e.target.name] : e.target.value // Actualizo el state
-    })
+    });
   }
 
   render () {
     return (
-        <form className="container">
+        <form onSubmit={this.enviar}>
 
-          <Input nombre="nombre" labelText="Nombre:" onChange={this.cambiosInput}/>
+          <NuevoUsuario cambiosInput={this.cambiosInput} state={this.state}/>
 
-          <Input nombre="apellido" labelText="Apellido:" onChange={this.cambiosInput}/>
-
-          <Input nombre="edad" labelText="Edad:" onChange={this.cambiosInput}/>
-
-          <Select nombre="genero" labelText="Género:" opciones={["Hombre", "Mujer", "Otro"]} onChange={this.cambiosInput} defaultValue={this.state.genero}/>
-
-          <Input nombre="contraseña" labelText="Contraseña:" onChange={this.cambiosInput}/>
-
-          <Button className="btn btn-primary" text="Registrar usuario" onClick={this.enviar}/>
-
+          <Usuarios fetchData={this.fetchData} editUser={this.editUser} deleteUser={this.deleteUser} users={this.state.users}/>
         </form>
     )
   }

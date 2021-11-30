@@ -26,21 +26,10 @@ userCtrl.newUser =  async (req, res) => {
     }
 };
 
-userCtrl.getUser = async (req, res) => {
-    try {
-        const {id} = req.params;
-        const user = await User.find({nombre:id});
-        res.json(user);
-    } catch (err) {
-        console.log(err);
-    }
-};
-
 userCtrl.editUser = async (req, res) => {
     try {
-        const {id} = req.params;
-        const user = await User.findByIdAndUpdate(id, req.body) // See options
-        res.send(user);
+        await User.findByIdAndUpdate(req.params.id , req.body) // See options
+        res.send("Usuario editado");
     } catch (err) {
         console.log(err)
     }
@@ -48,9 +37,8 @@ userCtrl.editUser = async (req, res) => {
 
 userCtrl.deleteUser = async (req, res) => {
     try {
-        const {id} = req.params;
-        await User.deleteOne({id:id});
-        res.send("corta")
+        await User.findByIdAndDelete(req.params.id);
+        res.json("Usuario eliminado")
     } catch (err) {
         console.log(err)
     }

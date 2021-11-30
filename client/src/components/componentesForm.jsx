@@ -1,29 +1,19 @@
 function Input(props) {
   return (
-    <div>
-      <label style={{ padding: "5px" }} htmlFor={props.nombre}>
-        {props.labelText}
-      </label>
       <input
-        className=""
+        className="form-control "
         type="text"
         name={props.nombre}
         placeholder={props.nombre}
         onChange={props.onChange}
         autoComplete="off"
-      />
-    </div>
-  );
+      />);
 }
 
 function Select(props) {
   return (
-    <div>
-      <label style={{ padding: "5px" }} htmlFor={props.nombre}>
-        {props.labelText}
-      </label>
       <select
-        className=""
+        className="form-control"
         name={props.nombre}
         onChange={props.onChange}
         value={props.defaultValue}
@@ -36,13 +26,11 @@ function Select(props) {
           );
         })}
       </select>
-    </div>
   );
 }
 
 function Button(props) {
   return (
-    <div>
       <button
         onClick={props.onClick}
         className={props.className}
@@ -50,7 +38,6 @@ function Button(props) {
       >
         {props.text}
       </button>
-    </div>
   );
 }
 
