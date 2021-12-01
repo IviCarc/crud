@@ -68,9 +68,10 @@ export default class Formulario extends React.Component {
   }
 
   validar = (e) => {
-    if () {
-      console.log("NICE");
-    }
+    // if () {
+    //   console.log("NICE");
+    // }
+    console.log("asje")
   }
   
   render () {

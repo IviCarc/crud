@@ -6,21 +6,26 @@ userCtrl.getUsers = async (req, res) => {
     try {
         const users = await User.find();
         res.json(users)
-    } catch (err) {
-        console.log(err)
-        res.status(400).json ({
-            error:err
-        })
+    } 
+    catch (err) {
+        // res.status(400).json ({
+        //     error:err
+        // })
     }
 };
 
 userCtrl.newUser =  async (req, res) => {
+    let obj = {
+        nombre:req.body.nombre.value,
+        edad:req.body.edad.value,
+        apellido:req.body.apellido.value,
+        genero:req.body.genero.value,
+    }
     try  {
-        const obj  = req.body;
-        console.log(obj);
-        res.send("gracias")
+        console.log(obj)
         const newUser = new User(obj);
         await newUser.save();
+        res.send("gracias")
     } catch (err) {
         console.log(err);
     }

@@ -5,7 +5,7 @@ const URL = process.env.DATABASE
 mongoose.connect(URL, {
     useNewUrlParser: true,
     autoIndex:true
-});
+})
 
 const connection = mongoose.connection;
 
