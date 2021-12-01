@@ -1,12 +1,13 @@
 import React from "react";
 import Formulario from "./Formulario.jsx";
-import Titulo from "./Titulo.jsx";
 
 export default class App extends React.Component {
   render() {
     return (
       <div style={{ width: "80%", margin: "10px auto" }}>
-        <Titulo />
+        <div>
+          <h1 style={{textAlign:"center"}}>CRUD</h1>
+        </div>
         <Formulario/>
       </div>
     );

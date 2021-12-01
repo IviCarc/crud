@@ -33,7 +33,7 @@ const NuevoUsuario = (props) => {
                 labelText="Género:"
                 opciones={["Hombre", "Mujer", "Otro"]}
                 onChange={props.cambiosInput}
-                defaultValue={props.state.genero}
+                value={props.state.genero.value}
                 validar = {props.validar}
             />
 

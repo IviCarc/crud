@@ -19,7 +19,7 @@ function Select(props) {
         className="form-control"
         name={props.nombre}
         onChange={props.onChange}
-        value={props.defaultValue}
+        value={props.value}
         onKeyUp={props.validar}
         onBlur={props.validar}
       >

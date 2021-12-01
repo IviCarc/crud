@@ -13,7 +13,7 @@ export default class Formulario extends React.Component {
       nombre : { value: "", valid : null},
       apellido : { value: "", valid : null},
       edad : { value: 0, valid : null},
-      genero : { value: "", valid : null},
+      genero : { value: "Hombre", valid : null},
       users:[]
     }
     
@@ -21,41 +21,49 @@ export default class Formulario extends React.Component {
     
     this.editUser = this.editUser.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
-    this.fetchData = this.fetchData.bind(this);
-    this.enviar = this.enviar.bind(this);
+    this.getUsers = this.getUsers.bind(this);
+    this.newUser = this.newUser.bind(this);
     this.cambiosInput = this.cambiosInput.bind(this);
   }
 
   async componentDidMount() {
-    this.fetchData();
+    this.getUsers();
   }
   
   
   deleteUser = async (e, id) => {
     e.preventDefault();
     let url = this.url + "/" + id
-    console.log(url)
     await axios.delete(url);
-    this.fetchData();
+    this.getUsers();
   }
   
-  editUser = async (e, id) => {
+  editUser = async (e, usr) => {
     e.preventDefault();
-    this.fetchData();
+    let editData = {
+      "nombre":usr.nombre,
+      "apellido":usr.apellido,
+      "edad":usr.edad,
+      "genero":usr.genero,
+    }
+    await axios.put(this.url + "/" + usr._id, editData);
+    console.log(editData)
+    this.getUsers();
   } 
   
-  enviar = async (e) => {
+  newUser = async (e) => {
     e.preventDefault();
+    console.log(this.state.genero.value)
     await axios.post(this.url, {
-      nombre:this.state.nombre,
-      apellido:this.state.apellido,
-      edad:this.state.edad,
-      genero:this.state.genero
+      nombre : this.state.nombre.value,
+      apellido : this.state.apellido.value,
+      edad : parseInt(this.state.edad.value),
+      genero : this.state.genero.value
     });
-    this.fetchData();
+    this.getUsers();
   }
   
-  fetchData = async () => {
+  getUsers = async () => {
     const res = await axios.get(this.url);
     console.log("FETCH" , res.data)
     this.setState({users:res.data});
@@ -63,28 +71,32 @@ export default class Formulario extends React.Component {
   
   cambiosInput = (e) => {
     this.setState({
-      [e.target.name.value] : e.target.value // Actualizo el state
+      [e.target.name] : {value:e.target.value, valid:this.state[e.target.name].valid} // Actualizo el state sin alterar valid
     });
+    console.log(e.target.name)
   }
 
   validar = (e) => {
     // if () {
     //   console.log("NICE");
     // }
-    console.log("asje")
   }
   
   render () {
     return (
-      <form onSubmit={this.enviar}>
+      <form onSubmit={this.newUser}>
 
           <NuevoUsuario 
-            cambiosInput={this.cambiosInput} 
-            state={this.state}
-            validar={this.validar}
-            />
+          cambiosInput={this.cambiosInput} 
+          state={this.state}
+          validar={this.validar}
+          />
 
-          <Usuarios fetchData={this.fetchData} editUser={this.editUser} deleteUser={this.deleteUser} users={this.state.users}/>
+          <Usuarios 
+          editUser={this.editUser} 
+          deleteUser={this.deleteUser} 
+          users={this.state.users}
+          />
         </form>
     )
   }
