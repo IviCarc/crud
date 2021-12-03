@@ -1,5 +1,3 @@
-// import logo from './logo.svg';
-// import './App.css';
 import React from 'react';
 import Usuarios from './Usuarios'
 import axios from 'axios'
@@ -24,6 +22,12 @@ export default class Formulario extends React.Component {
     this.getUsers = this.getUsers.bind(this);
     this.newUser = this.newUser.bind(this);
     this.cambiosInput = this.cambiosInput.bind(this);
+
+    this.regex = {
+      nombre : /ada/,
+      apellido : /ada/,
+      edad : /adad/
+    }
   }
 
   async componentDidMount() {
@@ -47,13 +51,11 @@ export default class Formulario extends React.Component {
       "genero":usr.genero,
     }
     await axios.put(this.url + "/" + usr._id, editData);
-    console.log(editData)
     this.getUsers();
   } 
   
   newUser = async (e) => {
     e.preventDefault();
-    console.log(this.state.genero.value)
     await axios.post(this.url, {
       nombre : this.state.nombre.value,
       apellido : this.state.apellido.value,
@@ -65,40 +67,45 @@ export default class Formulario extends React.Component {
   
   getUsers = async () => {
     const res = await axios.get(this.url);
-    console.log("FETCH" , res.data)
     this.setState({users:res.data});
   }
   
   cambiosInput = (e) => {
     this.setState({
-      [e.target.name] : {value:e.target.value, valid:this.state[e.target.name].valid} // Actualizo el state sin alterar valid
+      [e.target.name] : {...this.state[e.target.name], value:e.target.value} // Actualizo el state sin alterar valid
     });
-    console.log(e.target.name)
   }
 
-  validar = (e) => {
-    // if () {
-    //   console.log("NICE");
-    // }
+  validar = (e, regex) => {
+    if (regex.test(e.target.value)) {
+      this.setState({
+        [e.target.name] : {...this.state[e.target.name], valid : true}
+      });
+    } else {
+      this.setState({
+        [e.target.name] : {...this.state[e.target.name], valid : false}
+      });
+    }
   }
   
   render () {
     return (
-      <form onSubmit={this.newUser}>
+      <form onSubmit={this.newUser} className="needs-validation">
 
           <NuevoUsuario 
           cambiosInput={this.cambiosInput} 
           state={this.state}
           validar={this.validar}
+          regex = {this.regex}
           />
 
           <Usuarios 
           editUser={this.editUser} 
           deleteUser={this.deleteUser} 
           users={this.state.users}
+          regex = {this.regex}
           />
         </form>
     )
   }
-  
 }

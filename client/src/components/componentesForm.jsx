@@ -7,9 +7,8 @@ function Input(props) {
         placeholder={props.nombre}
         onChange={props.onChange}
         autoComplete="off"
-        onKeyUp={props.validar}
-        onBlur={props.validar}
-        regex={props.regex}
+        onKeyUp={(e) => props.validar(e, props.regex)}
+        onBlur={(e) => props.validar(e, props.regex)}
       />);
 }
 
