@@ -2,7 +2,7 @@ import React from 'react';
 import Usuarios from './Usuarios'
 import axios from 'axios'
 import NuevoUsuario from './NuevoUsuario.jsx';
-
+import {StyledForm} from './StyledComponents';
 
 export default class Formulario extends React.Component {
   constructor(props) {
@@ -12,7 +12,7 @@ export default class Formulario extends React.Component {
       apellido : { value: "", valid : null},
       edad : { value: 0, valid : null},
       genero : { value: "Hombre", valid : null},
-      users:[]
+      users:[],
     }
     
     this.url = "http://localhost:3000/api/users";
@@ -24,9 +24,9 @@ export default class Formulario extends React.Component {
     this.cambiosInput = this.cambiosInput.bind(this);
 
     this.regex = {
-      nombre : /ada/,
-      apellido : /ada/,
-      edad : /adad/
+      nombre : /^[a-zA-Z]{4,16}$/,
+      apellido : /^[a-zA-Z]{4,16}$/,
+      edad : /^[0-9]{2,2}$/
     }
   }
 
@@ -44,6 +44,7 @@ export default class Formulario extends React.Component {
   
   editUser = async (e, usr) => {
     e.preventDefault();
+    
     let editData = {
       "nombre":usr.nombre,
       "apellido":usr.apellido,
@@ -56,6 +57,12 @@ export default class Formulario extends React.Component {
   
   newUser = async (e) => {
     e.preventDefault();
+
+    // CHECK DATA
+    for (const key in this.state) {
+      if (!this.state[key].valid) {alert("Está ingresando mala data"); return}
+    }
+
     await axios.post(this.url, {
       nombre : this.state.nombre.value,
       apellido : this.state.apellido.value,
@@ -90,7 +97,7 @@ export default class Formulario extends React.Component {
   
   render () {
     return (
-      <form onSubmit={this.newUser} className="needs-validation">
+      <StyledForm onSubmit={this.newUser}>
 
           <NuevoUsuario 
           cambiosInput={this.cambiosInput} 
@@ -105,7 +112,7 @@ export default class Formulario extends React.Component {
           users={this.state.users}
           regex = {this.regex}
           />
-        </form>
+        </StyledForm>
     )
   }
 }

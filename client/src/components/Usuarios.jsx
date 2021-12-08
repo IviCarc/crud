@@ -1,9 +1,11 @@
 import React from 'react';
 import Usuario from './Usuario';
+import { StyledH3 } from './StyledComponents';
 
 const Usuarios = (props) => {
     return (
-        <div className="m-1">
+        <>
+        <StyledH3>Usuarios existentes</StyledH3>
             {
             props.users.map((usr, i) => {
                 return (
@@ -17,7 +19,7 @@ const Usuarios = (props) => {
                 )
             })
             } 
-        </div>
+        </>
     )
 }
 

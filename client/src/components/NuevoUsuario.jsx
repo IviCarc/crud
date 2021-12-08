@@ -1,26 +1,11 @@
-import React, {useState} from "react";
+import React from "react";
+import { StyledInput, StyledSelect, StyledBtn, StyledH3 } from "./StyledComponents";
 
 const NuevoUsuario = (props) => {
-
-    const [nameClass, setNameClass] = useState(null)
-    const [nameClass, setNameClass] = useState(null)
-    const [nameClass, setNameClass] = useState(null)
-
-    let inputClass = "form-control";
-
-    if (props.state.nombre.valid == null) {
-        console.log("NULL")
-    } else if (props.state.nombre.valid == true) { 
-        inputClass += " is-valid"
-    } else {
-        inputClass += " is-invalid"
-    }
-
     return (
-        <div className="d-flex justify-content-between gap-2 m-1">
-            <div className="form-group">
-            <input
-            className={inputClass}
+        <>
+            <StyledH3>Crear nuevo usuario</StyledH3>
+            <StyledInput 
             type="text"
             name="nombre"
             placeholder="Nombre"
@@ -29,63 +14,50 @@ const NuevoUsuario = (props) => {
             onKeyUp={(e) => props.validar(e, props.regex.nombre)}
             onBlur={(e) => props.validar(e, props.regex.nombre)}
             required
-            />
-            </div>
+            valido={props.state.nombre.valid}
+            ></StyledInput>
 
-            <div className="form-group">
-            <input
-            className={inputClass}
+            <StyledInput 
             type="text"
-            name="apellido"
             placeholder="Apellido"
+            name="apellido"
             onChange={props.cambiosInput}
             autoComplete="off"
             onKeyUp={(e) => props.validar(e, props.regex.apellido)}
             onBlur={(e) => props.validar(e, props.regex.apellido)}
             required
-            />
+            valido={props.state.apellido.valid}
+            ></StyledInput>
 
-            </div>
-
-            <div className="form-group has-error">
-                
-            <input
-            className="form-control "
+            <StyledInput 
             type="text"
-            name="edad"
             placeholder="Edad"
+            name="edad"
             onChange={props.cambiosInput}
             autoComplete="off"
             onKeyUp={(e) => props.validar(e, props.regex.edad)}
             onBlur={(e) => props.validar(e, props.regex.edad)}
             required
-            />
-            </div>
-
-
-            <div className="form-group has-error">  
-            <select
-            className="form-control"
-            name={"genero"}
+            valido={props.state.edad.valid}
+            ></StyledInput>
+            
+            <StyledSelect 
+            name="genero"
             onChange={props.cambiosInput}
             value={props.state.genero.value}
             required
+            validar={props.validar}
             >
                 <option value="Hombre">Hombre</option>
                 <option value="Mujer">Mujer</option>
                 <option value="Otro">Otro</option>
-            </select>
-                
-            </div>
-
-
-            <button
-            onClick={props.onClick}
-            className="btn btn-primary"
-            >
+            </StyledSelect>
+            
+            <StyledBtn >
                 Registrar
-            </button>
-        </div>
+            </StyledBtn>
+
+        </>
     );
 };
 

@@ -1,5 +1,8 @@
 import React, {useState} from "react";
 import axios from 'axios';
+import { StyledInput, StyledBtn, StyledSelect } from "./StyledComponents";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 
 const Usuario = (props) => {
     const [readOnly, setReadOnly] = useState(true);
@@ -30,55 +33,63 @@ const Usuario = (props) => {
             }
             await axios.put('http://localhost:3000/api/users/' + id, editedData);
         } 
-        
+
         setReadOnly(!readOnly); 
         setOnChange(!onChange)
-        
     }
 
     return (
-        <div className="d-flex justify-content-between gap-2
-                    p-1">
-            <input 
+        <React.Fragment>
+
+            <StyledInput
             name="nombre" 
             type="text" 
             readOnly={readOnly} 
             onChange={cambiosInput} 
             defaultValue={props.usr.nombre} 
-            className="form-control"/>
+            >
+            </StyledInput>
 
-            <input 
+
+            <StyledInput 
             name="apellido" 
             type="text" 
             readOnly={readOnly} 
             onChange={cambiosInput} 
             defaultValue={props.usr.apellido} 
-            className="form-control"/>
+            />
 
-            <input 
+            <StyledInput 
             name="edad" 
             type="text" 
             readOnly={readOnly} 
             onChange={cambiosInput} 
             defaultValue={props.usr.edad} 
-            className="form-control"/>
+            />
 
-            <select 
+            <StyledSelect 
             name="genero" 
             disabled={readOnly} 
             onChange={cambiosInput} 
             defaultValue={props.usr.genero}  
-            className="form-control">
+            >
                 <option value="Hombre">Hombre</option>
                 <option value="Mujer">Mujer</option>
                 <option value="Otro">Otro</option>
-            </select>
+            </StyledSelect>
 
-            <button className="btn btn-danger" 
-                onClick= {(e) => props.deleteUser(e, props.usr._id) } > X </button>
-            <button className="btn btn-success" 
-                onClick={ (e) => { edit(e, props.usr._id)} } >X</button>
-        </div>
+            <div style={{display:"flex", flexWrap:"wrap", justifyContent:"space-around"}}>
+            <StyledBtn
+                bkgColor="#f14729" onClick= {(e) => props.deleteUser(e, props.usr._id) } > 
+                    <FontAwesomeIcon icon={faTrash} /> 
+                </StyledBtn>
+            <StyledBtn
+                bkgColor="#3bbe2ace" onClick={ (e) => { edit(e, props.usr._id)} } > 
+                    <FontAwesomeIcon icon={faEdit} />
+                </StyledBtn>
+            </div>
+            
+        </React.Fragment>
     )
 }
 
