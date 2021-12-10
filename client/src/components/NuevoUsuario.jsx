@@ -49,14 +49,19 @@ const NuevoUsuario = (props) => {
 
 			<StyledSelect
 				name='genero'
-				onChange={props.cambiosInput}
+				onChange={(e) => {
+					props.cambiosInput(e);
+					props.validar(e, props.regex.genero);
+				}}
 				value={props.state.genero.value}
 				required
 				validar={props.validar}
+				onKeyUp={(e) => props.validar(e, props.regex.genero)}
+				onBlur={(e) => props.validar(e, props.regex.genero)}
 			>
-				<option value='Hombre'>Hombre</option>
-				<option value='Mujer'>Mujer</option>
-				<option value='Otro'>Otro</option>
+				<option value='hombre'>Hombre</option>
+				<option value='mujer'>Mujer</option>
+				<option value='otro'>Otro</option>
 			</StyledSelect>
 
 			<StyledBtn>Registrar</StyledBtn>

@@ -12,13 +12,11 @@ export default class Formulario extends React.Component {
 			nombre: { value: "", valid: null },
 			apellido: { value: "", valid: null },
 			edad: { value: 0, valid: null },
-			genero: { value: "Hombre", valid: null },
+			genero: { value: "hombre", valid: true },
 			users: [],
 		};
 
 		this.url = process.env.REACT_APP_URL;
-
-		console.log(this.url);
 
 		this.editUser = this.editUser.bind(this);
 		this.deleteUser = this.deleteUser.bind(this);
@@ -30,6 +28,7 @@ export default class Formulario extends React.Component {
 			nombre: /^[a-zA-Z]{4,16}$/,
 			apellido: /^[a-zA-Z]{4,16}$/,
 			edad: /^[0-9]{2,2}$/,
+			genero: /hombre|mujer|otro/,
 		};
 	}
 
@@ -47,6 +46,8 @@ export default class Formulario extends React.Component {
 	editUser = async (e, usr) => {
 		e.preventDefault();
 
+		// CHECK DATA
+
 		let editData = {
 			nombre: usr.nombre,
 			apellido: usr.apellido,
@@ -59,12 +60,13 @@ export default class Formulario extends React.Component {
 
 	newUser = async (e) => {
 		e.preventDefault();
-
 		// CHECK DATA
 		for (const key in this.state) {
-			if (!this.state[key].valid) {
-				alert("Está ingresando mala data");
-				return;
+			if (key !== "users") {
+				if (!this.state[key].valid) return; // Esta función ejecuta un bloqueo al verificar la validez del formulario
+				// PROBLEMA DE SEGURIDAD
+				// No es posible chequear la validez del género si un usuario malicioso cambia el valor del select desde consola
+				// VERIFICAR LOS DATOS EN EL BACKEND
 			}
 		}
 
