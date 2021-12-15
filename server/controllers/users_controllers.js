@@ -31,8 +31,6 @@ userCtrl.getUsers = async (req, res) => {
 };
 
 userCtrl.newUser = async (req, res) => {
-	// AGREGAR VALIDACIÓN
-
 	let obj = {
 		nombre: req.body.nombre,
 		edad: req.body.edad,
@@ -41,7 +39,7 @@ userCtrl.newUser = async (req, res) => {
 	};
 
 	if (validar(obj) === false) {
-		console.log("TE AGARRE WACHIN");
+		res.sendStatus(400);
 		return;
 	}
 
@@ -50,29 +48,50 @@ userCtrl.newUser = async (req, res) => {
 	try {
 		const newUser = new User(obj);
 		await newUser.save();
-		res.send(200);
+		res.sendStatus(200);
 	} catch (err) {
 		console.log(err);
-		res.send(415);
+		res.status(400).json({
+			error: err,
+		});
 	}
 };
 
 userCtrl.editUser = async (req, res) => {
-	// AGREGAR VALIDACIÓN
+	let obj = {
+		nombre: req.body.nombre,
+		edad: req.body.edad,
+		apellido: req.body.apellido,
+		genero: req.body.genero,
+	};
+
+	if (validar(obj) === false) {
+		res.sendStatus(400);
+		return;
+	}
+
+	obj.edad = parseInt(obj.edad);
+
 	try {
 		await User.findByIdAndUpdate(req.params.id, req.body); // See options
-		res.send("Usuario editado");
+		res.status(200).send("Usuario editado");
 	} catch (err) {
 		console.log(err);
+		res.status(400).json({
+			error: err,
+		});
 	}
 };
 
 userCtrl.deleteUser = async (req, res) => {
 	try {
 		await User.findByIdAndDelete(req.params.id);
-		res.json("Usuario eliminado");
+		res.status(200).json("Usuario eliminado");
 	} catch (err) {
 		console.log(err);
+		res.status(400).json({
+			error: err,
+		});
 	}
 };
 
