@@ -63,10 +63,7 @@ export default class Formulario extends React.Component {
 		// CHECK DATA
 		for (const key in this.state) {
 			if (key !== "users") {
-				if (!this.state[key].valid) return; // Esta función ejecuta un bloqueo al verificar la validez del formulario
-				// PROBLEMA DE SEGURIDAD
-				// No es posible chequear la validez del género si un usuario malicioso cambia el valor del select desde consola
-				// VERIFICAR LOS DATOS EN EL BACKEND
+				if (!this.state[key].valid) return;
 			}
 		}
 
